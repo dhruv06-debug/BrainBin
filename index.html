@@ -11,25 +11,13 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            color: #1f2937; /* Default text color */
+            color: #1f2937;
         }
         @keyframes blob {
-            0%, 100% {
-                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                border-radius: 40% 60% 50% 50% / 50% 60% 40% 50%;
-                transform: translate(20px, -10px) scale(1.1);
-            }
-            50% {
-                border-radius: 70% 30% 60% 40% / 30% 70% 50% 50%;
-                transform: translate(-15px, 15px) scale(0.9);
-            }
-            75% {
-                border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-                transform: translate(10px, -20px) scale(1.05);
-            }
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0, 0) scale(1); }
+            25% { border-radius: 40% 60% 50% 50% / 50% 60% 40% 50%; transform: translate(20px, -10px) scale(1.1); }
+            50% { border-radius: 70% 30% 60% 40% / 30% 70% 50% 50%; transform: translate(-15px, 15px) scale(0.9); }
+            75% { border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; transform: translate(10px, -20px) scale(1.05); }
         }
         .animate-blob { animation: blob 7s infinite ease-in-out; }
         .animation-delay-2000 { animation-delay: -2s; }
@@ -37,7 +25,7 @@
         .animation-delay-6000 { animation-delay: -6s; }
         .bg-with-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('');
+            background-image: url('brainbin.jpg');
             background-size: cover; height: 750px;
             background-position: center; background-repeat: no-repeat;
             z-index: -15;
@@ -45,6 +33,9 @@
         .bg-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to right, rgba(31, 187, 255, 0.4), rgba(0, 255, 170, 0.4));
+        }
+        .modal-bg {
+            background-color: rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -64,11 +55,9 @@
                 <a href="#about" class="hover:text-teal-600 transition-colors text-sm sm:text-base">About Us</a>
                 <a href="#how-it-works" class="hover:text-teal-600 transition-colors text-sm sm:text-base">How It Works</a>
                 <a href="#contact" class="hover:text-teal-600 transition-colors text-sm sm:text-base">Contact</a>
-                <a href="#" class="text-teal-600 hover:text-teal-700 transition-colors text-sm sm:text-base">Login/Register</a>
+                <button id="show-login-register" class="text-teal-600 hover:text-teal-700 transition-colors font-medium text-sm sm:text-base focus:outline-none">Login/Register</button>
             </div>
-
-            <!-- Three-dot menu button -->
-            <button id="menu-btn" class="md:hidden focus:outline-none">
+            <button id="menu-btn" class="md:hidden focus:outline-none" type="button">
                 <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="5" r="1.5"/>
                     <circle cx="12" cy="12" r="1.5"/>
@@ -77,13 +66,13 @@
             </button>
         </nav>
 
-        <!-- Mobile dropdown menu -->
         <div id="mobile-menu" class="hidden absolute top-14 right-4 bg-white shadow-lg rounded-lg w-48 z-50">
             <div class="flex flex-col py-2">
                 <a href="#home" class="px-4 py-2 hover:bg-gray-100 text-gray-700">Home</a>
                 <a href="#dashboard" class="px-4 py-2 hover:bg-gray-100 text-gray-700">Dashboard</a>
                 <a href="#about" class="px-4 py-2 hover:bg-gray-100 text-gray-700">About</a>
                 <a href="#contact" class="px-4 py-2 hover:bg-gray-100 text-gray-700">Contact</a>
+                <button id="show-login-register-mobile" class="px-4 py-2 hover:bg-gray-100 text-gray-700 text-left">Login/Register</button>
             </div>
         </div>
     </header>
@@ -109,7 +98,6 @@
             </div>
         </section>
 
-        <!-- About section -->
         <section id="about" class="py-20 md:py-24 bg-gradient-to-r from-cyan-50 to-teal-50">
             <div class="container mx-auto px-4">
                 <div class="flex flex-col md:flex-row items-center gap-12">
@@ -129,7 +117,6 @@
             </div>
         </section>
 
-        <!-- How it works -->
         <section id="how-it-works" class="py-20 md:py-24 bg-white">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">How BrainBin Works</h2>
@@ -159,7 +146,6 @@
             </div>
         </section>
 
-        <!-- CTA -->
         <section class="bg-teal-600 text-white py-16 md:py-20">
             <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Change the Way You Recycle?</h2>
@@ -170,7 +156,6 @@
             </div>
         </section>
 
-        <!-- Contact -->
         <section id="contact" class="py-20 md:py-24 bg-gray-50">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">Contact Us</h2>
@@ -210,15 +195,122 @@
         </div>
     </footer>
 
+    <div id="login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-bg">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-11/12 max-w-sm relative">
+            <button id="close-login" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-center text-gray-900">Login to your account</h3>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="login-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" required>
+                </div>
+                <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-md font-semibold hover:bg-teal-700 transition-colors">
+                    Login
+                </button>
+            </form>
+            <p class="text-center text-sm mt-4 text-gray-600">
+                Don't have an account? <button id="show-register-from-login" class="text-teal-600 hover:text-teal-700 focus:outline-none font-medium" type="button">Register</button>
+            </p>
+        </div>
+    </div>
+
+    <div id="register-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-bg">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-11/12 max-w-sm relative">
+            <button id="close-register" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 focus:outline-none" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 class="text-2xl font-bold mb-6 text-center text-gray-900">Create an account</h3>
+            <form id="register-form" class="space-y-4">
+                <div>
+                    <label for="register-name" class="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="register-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="register-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="register-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="register-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" required>
+                </div>
+                <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-md font-semibold hover:bg-teal-700 transition-colors">
+                    Register
+                </button>
+            </form>
+            <p class="text-center text-sm mt-4 text-gray-600">
+                Already have an account? <button id="show-login-from-register" class="text-teal-600 hover:text-teal-700 focus:outline-none font-medium" type="button">Login</button>
+            </p>
+        </div>
+    </div>
+
     <script>
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const showLoginRegisterBtn = document.getElementById('show-login-register');
+        const showLoginRegisterMobileBtn = document.getElementById('show-login-register-mobile');
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const closeLoginBtn = document.getElementById('close-login');
+        const closeRegisterBtn = document.getElementById('close-register');
+        const showRegisterFromLoginBtn = document.getElementById('show-register-from-login');
+        const showLoginFromRegisterBtn = document.getElementById('show-login-from-register');
 
+        // Toggle mobile menu
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-    </script>
 
+        // Show login modal
+        showLoginRegisterBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+        showLoginRegisterMobileBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+            mobileMenu.classList.add('hidden'); // Hide the mobile menu
+        });
+
+        // Close modals
+        closeLoginBtn.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+        closeRegisterBtn.addEventListener('click', () => {
+            registerModal.classList.add('hidden');
+        });
+
+        // Switch between modals
+        showRegisterFromLoginBtn.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            registerModal.classList.remove('hidden');
+        });
+        showLoginFromRegisterBtn.addEventListener('click', () => {
+            registerModal.classList.add('hidden');
+            loginModal.classList.remove('hidden');
+        });
+
+        // Simple form validation (prevents submission on a static site)
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log("Login form submitted (on a static site)");
+            // Here you would typically send data to a backend
+            alert("Login functionality is for demonstration only. This is a static site!");
+        });
+
+        document.getElementById('register-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log("Register form submitted (on a static site)");
+            // Here you would typically send data to a backend
+            alert("Registration functionality is for demonstration only. This is a static site!");
+        });
+    </script>
 </body>
 </html>
-
